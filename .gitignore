@@ -10,3 +10,10 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+*.gen.go
+bin
+vendor
+unit-tests.xml
+tools/bin
+tools/vendor
+test-results
