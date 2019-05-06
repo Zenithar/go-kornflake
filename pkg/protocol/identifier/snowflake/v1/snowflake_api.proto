@@ -53,5 +53,5 @@ message GetRequest {}
 // Get identifier response object
 message GetResponse {
   // identifier from the snowflake serie
-  uint64 identifier = 1;
+  string identifier = 1;
 }

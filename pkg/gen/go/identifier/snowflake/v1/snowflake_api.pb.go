@@ -74,7 +74,7 @@ var xxx_messageInfo_GetRequest proto.InternalMessageInfo
 // Get identifier response object
 type GetResponse struct {
 	// identifier from the snowflake serie
-	Identifier           uint64   `protobuf:"varint,1,opt,name=identifier,proto3" json:"identifier,omitempty"`
+	Identifier           string   `protobuf:"bytes,1,opt,name=identifier,proto3" json:"identifier,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -118,11 +118,11 @@ func (m *GetResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetResponse proto.InternalMessageInfo
 
-func (m *GetResponse) GetIdentifier() uint64 {
+func (m *GetResponse) GetIdentifier() string {
 	if m != nil {
 		return m.Identifier
 	}
-	return 0
+	return ""
 }
 
 func init() {
@@ -143,7 +143,7 @@ var fileDescriptor_4ec1b7be4f43d63c = []byte{
 	0x49, 0x7a, 0xc9, 0xf9, 0xb9, 0xfa, 0xe9, 0xf9, 0xe9, 0xf9, 0xfa, 0x60, 0xf5, 0x49, 0xa5, 0x69,
 	0x60, 0x1e, 0x98, 0x03, 0x66, 0x41, 0xcc, 0x51, 0xe2, 0xe1, 0xe2, 0x72, 0x4f, 0x2d, 0x09, 0x4a,
 	0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x51, 0xd2, 0xe5, 0xe2, 0x06, 0xf3, 0x8a, 0x0b, 0xf2, 0xf3, 0x8a,
-	0x53, 0x85, 0xe4, 0xb8, 0xb8, 0x10, 0xd6, 0x48, 0x30, 0x2a, 0x30, 0x6a, 0xb0, 0x04, 0x21, 0x89,
+	0x53, 0x85, 0xe4, 0xb8, 0xb8, 0x10, 0xd6, 0x48, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x21, 0x89,
 	0x18, 0x25, 0x70, 0xf1, 0x04, 0xc3, 0xec, 0x76, 0x0c, 0xf0, 0x14, 0x0a, 0xe0, 0x62, 0x76, 0x4f,
 	0x2d, 0x11, 0x52, 0xd6, 0xc3, 0xe1, 0x38, 0x3d, 0x84, 0x55, 0x52, 0x2a, 0xf8, 0x15, 0x41, 0x5c,
 	0xe0, 0x34, 0x8d, 0xf1, 0xc7, 0x43, 0x39, 0xc6, 0x15, 0x8f, 0xe4, 0x18, 0x4f, 0x3c, 0x92, 0x63,
@@ -152,7 +152,7 @@ var fileDescriptor_4ec1b7be4f43d63c = []byte{
 	0x00, 0xf2, 0x6e, 0x00, 0x63, 0x14, 0x37, 0x5c, 0x49, 0x99, 0xe1, 0x22, 0x26, 0x66, 0xcf, 0xe0,
 	0x88, 0x55, 0x4c, 0xe2, 0x9e, 0x08, 0x13, 0xe0, 0x7a, 0xf4, 0xc2, 0x0c, 0x4f, 0x21, 0xcb, 0xc4,
 	0xc0, 0x65, 0x62, 0xc2, 0x0c, 0x93, 0xd8, 0xc0, 0xc1, 0x67, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff,
-	0xf0, 0x75, 0xc6, 0x42, 0xb5, 0x01, 0x00, 0x00,
+	0x90, 0x62, 0x23, 0x2f, 0xb5, 0x01, 0x00, 0x00,
 }
 
 func (this *GetRequest) Equal(that interface{}) bool {
@@ -318,10 +318,11 @@ func (m *GetResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Identifier != 0 {
-		dAtA[i] = 0x8
+	if len(m.Identifier) > 0 {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintSnowflakeApi(dAtA, i, uint64(m.Identifier))
+		i = encodeVarintSnowflakeApi(dAtA, i, uint64(len(m.Identifier)))
+		i += copy(dAtA[i:], m.Identifier)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -349,7 +350,7 @@ func NewPopulatedGetRequest(r randySnowflakeApi, easy bool) *GetRequest {
 
 func NewPopulatedGetResponse(r randySnowflakeApi, easy bool) *GetResponse {
 	this := &GetResponse{}
-	this.Identifier = uint64(uint64(r.Uint32()))
+	this.Identifier = string(randStringSnowflakeApi(r))
 	if !easy && r.Intn(10) != 0 {
 		this.XXX_unrecognized = randUnrecognizedSnowflakeApi(r, 2)
 	}
@@ -451,8 +452,9 @@ func (m *GetResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Identifier != 0 {
-		n += 1 + sovSnowflakeApi(uint64(m.Identifier))
+	l = len(m.Identifier)
+	if l > 0 {
+		n += 1 + l + sovSnowflakeApi(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -560,10 +562,10 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Identifier", wireType)
 			}
-			m.Identifier = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowSnowflakeApi
@@ -573,11 +575,24 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Identifier |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSnowflakeApi
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSnowflakeApi
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Identifier = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipSnowflakeApi(dAtA[iNdEx:])

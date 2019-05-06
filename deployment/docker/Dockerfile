@@ -21,16 +21,12 @@ COPY --chown=golang:golang . .
 
 # Install dependencies
 RUN set -eux; \
-    go run mage.go -d tools go:tools && \
+    go run mage.go -d tools && \
     go run mage.go go:deps
 
 # Build final target
 RUN set -eux; \
     go run mage.go
-
-# Compress binaries
-RUN set -eux; \
-    upx -9 bin/*
 
 ## -------------------------------------------------------------------------------------------------
 

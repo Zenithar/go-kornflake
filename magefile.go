@@ -88,7 +88,7 @@ type Gen mg.Namespace
 func (Gen) Wire() {
 	color.Blue("### Wiring dispatchers")
 
-	// mustGoGenerate("GraphQL", "go.zenithar.org/spotigraph/cmd/spotigraph/internal/dispatchers/graphql")
+	mustGoGenerate("gRPC", "go.zenithar.org/kornflake/cli/kornflake/internal/dispatchers/grpc")
 }
 
 // Generate mocks for tests
@@ -244,7 +244,7 @@ func getGoSrcFiles() []string {
 	var goSrcFiles []string
 
 	for _, path := range goFiles {
-		if strings.HasSuffix(path, "_test.go") {
+		if !strings.HasSuffix(path, "_test.go") {
 			continue
 		}
 

@@ -30,6 +30,9 @@ generate:
       type: gogo
       flags: lang=gogo
       output: ../gen/go
+    - name: cobra
+      type: gogo
+      output: ../gen/go
     - name: mock
       type: gogo
       output: ../gen/go

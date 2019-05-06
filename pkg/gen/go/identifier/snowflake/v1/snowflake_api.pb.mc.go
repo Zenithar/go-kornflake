@@ -4,7 +4,6 @@ package snowflakev1
 
 import (
 	"context"
-
 	"github.com/bxcodec/faker"
 )
 
