@@ -52,18 +52,18 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, snowflakes v1.Sn
 	)
 
 	// Enable TLS if requested
-	if cfg.Server.UseTLS {
+	if cfg.Server.GRPC.UseTLS {
 		// Client authentication enabled but not required
 		clientAuth := tls.VerifyClientCertIfGiven
-		if cfg.Server.TLS.ClientAuthenticationRequired {
+		if cfg.Server.GRPC.TLS.ClientAuthenticationRequired {
 			clientAuth = tls.RequireAndVerifyClientCert
 		}
 
 		// Generate TLS configuration
 		tlsConfig, err := tlsconfig.Server(tlsconfig.Options{
-			KeyFile:    cfg.Server.TLS.PrivateKeyPath,
-			CertFile:   cfg.Server.TLS.CertificatePath,
-			CAFile:     cfg.Server.TLS.CACertificatePath,
+			KeyFile:    cfg.Server.GRPC.TLS.PrivateKeyPath,
+			CertFile:   cfg.Server.GRPC.TLS.CertificatePath,
+			CAFile:     cfg.Server.GRPC.TLS.CACertificatePath,
 			ClientAuth: clientAuth,
 		})
 		if err != nil {

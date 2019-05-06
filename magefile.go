@@ -89,6 +89,7 @@ func (Gen) Wire() {
 	color.Blue("### Wiring dispatchers")
 
 	mustGoGenerate("gRPC", "go.zenithar.org/kornflake/cli/kornflake/internal/dispatchers/grpc")
+	mustGoGenerate("HTTP", "go.zenithar.org/kornflake/cli/kornflake/internal/dispatchers/http")
 }
 
 // Generate mocks for tests

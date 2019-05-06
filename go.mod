@@ -6,8 +6,11 @@ require (
 	github.com/bxcodec/faker v2.0.1+incompatible
 	github.com/cloudflare/tableflip v0.0.0-20190329062924-8392f1641731
 	github.com/common-nighthawk/go-figure v0.0.0-20180619031829-18b2b544842c
+	github.com/coreos/etcd v3.3.13+incompatible // indirect
+	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0 // indirect
+	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/protobuf v1.3.1
 	github.com/google/wire v0.2.1
@@ -22,20 +25,24 @@ require (
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.7.0 // indirect
+	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0
 	github.com/pelletier/go-toml v1.4.0
+	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cobra v0.0.3
+	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2
 	go.opencensus.io v0.21.0
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/flags v0.0.1
-	go.zenithar.org/pkg/log v0.0.2
+	go.zenithar.org/pkg/log v0.0.3
 	go.zenithar.org/pkg/platform v0.0.13
 	go.zenithar.org/pkg/tlsconfig v0.0.1
+	go.zenithar.org/pkg/web v0.0.2
 	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a
-	golang.org/x/xerrors v0.0.0-20190410155217-1f06c39b4373
+	golang.org/x/sys v0.0.0-20190506115046-ca7f33d4116e // indirect
+	golang.org/x/tools v0.0.0-20190506145303-2d16b83fe98c // indirect
+	golang.org/x/xerrors v0.0.0-20190506180316-385005612d73
 	google.golang.org/grpc v1.20.1
-	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 )
