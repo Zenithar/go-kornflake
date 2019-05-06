@@ -6,7 +6,6 @@ require (
 	github.com/bxcodec/faker v2.0.1+incompatible
 	github.com/cloudflare/tableflip v0.0.0-20190329062924-8392f1641731
 	github.com/common-nighthawk/go-figure v0.0.0-20180619031829-18b2b544842c
-	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/gogo/protobuf v1.2.1
@@ -17,6 +16,8 @@ require (
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/magefile/mage v1.8.0
+	github.com/mattheath/base62 v0.0.0-20150408093626-b80cdc656a7a // indirect
+	github.com/mattheath/kala v0.0.0-20171219141654-d6276794bf0e
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mcuadros/go-defaults v1.1.0
@@ -24,7 +25,6 @@ require (
 	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.5.0
 	github.com/pelletier/go-toml v1.4.0
-	github.com/sony/sonyflake v0.0.0-20181109022403-6d5bd6181009
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/pflag v1.0.3
 	github.com/spf13/viper v1.3.2

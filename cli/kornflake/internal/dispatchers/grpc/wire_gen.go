@@ -17,7 +17,9 @@ import (
 	"go.uber.org/zap"
 	"go.zenithar.org/kornflake/cli/kornflake/internal/config"
 	"go.zenithar.org/kornflake/internal/services/v1"
+	"go.zenithar.org/kornflake/internal/services/v1/bigflake"
 	"go.zenithar.org/kornflake/internal/services/v1/snowflake"
+	"go.zenithar.org/kornflake/pkg/gen/go/identifier/bigflake/v1"
 	"go.zenithar.org/kornflake/pkg/gen/go/identifier/snowflake/v1"
 	"go.zenithar.org/pkg/log"
 	"go.zenithar.org/pkg/tlsconfig"
@@ -31,8 +33,9 @@ import (
 // Injectors from wire.go:
 
 func setup(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-	identifierGenerator := snowflake.New()
-	server, err := grpcServer(ctx, cfg, identifierGenerator)
+	snowflakeGenerator := snowflake.New()
+	bigflakeGenerator := bigflake.New()
+	server, err := grpcServer(ctx, cfg, snowflakeGenerator, bigflakeGenerator)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +44,7 @@ func setup(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error)
 
 // wire.go:
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, identifiers v1.IdentifierGenerator) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, snowflakes v1.SnowflakeGenerator, bigflakes v1.BigflakeGenerator) (*grpc.Server, error) {
 	sopts := []grpc.ServerOption{}
 	grpc_zap.ReplaceGrpcLogger(zap.L())
 
@@ -75,7 +78,8 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, identifiers v1.I
 
 	healthServer := health.NewServer()
 	grpc_health_v1.RegisterHealthServer(server, healthServer)
-	snowflakev1.RegisterSnowflakeAPIServer(server, identifiers)
+	snowflakev1.RegisterSnowflakeAPIServer(server, snowflakes)
+	bigflakev1.RegisterBigflakeAPIServer(server, bigflakes)
 	reflection.Register(server)
 
 	err := view.Register(ochttp.ServerRequestCountView, ochttp.ServerRequestBytesView, ochttp.ServerResponseBytesView, ochttp.ServerLatencyView, ochttp.ServerRequestCountByMethod, ochttp.ServerResponseCountByStatusCode)

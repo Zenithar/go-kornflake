@@ -9,6 +9,7 @@ import (
 	"go.zenithar.org/kornflake/cli/kornflake/internal/config"
 	"go.zenithar.org/kornflake/cli/kornflake/internal/core"
 	v1 "go.zenithar.org/kornflake/internal/services/v1"
+	bigflakev1 "go.zenithar.org/kornflake/pkg/gen/go/identifier/bigflake/v1"
 	snowflakev1 "go.zenithar.org/kornflake/pkg/gen/go/identifier/snowflake/v1"
 
 	"github.com/google/wire"
@@ -28,7 +29,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func grpcServer(ctx context.Context, cfg *config.Configuration, identifiers v1.IdentifierGenerator) (*grpc.Server, error) {
+func grpcServer(ctx context.Context, cfg *config.Configuration, snowflakes v1.SnowflakeGenerator, bigflakes v1.BigflakeGenerator) (*grpc.Server, error) {
 	// gRPC middlewares
 	sopts := []grpc.ServerOption{}
 
@@ -84,7 +85,8 @@ func grpcServer(ctx context.Context, cfg *config.Configuration, identifiers v1.I
 	healthpb.RegisterHealthServer(server, healthServer)
 
 	// Register services
-	snowflakev1.RegisterSnowflakeAPIServer(server, identifiers)
+	snowflakev1.RegisterSnowflakeAPIServer(server, snowflakes)
+	bigflakev1.RegisterBigflakeAPIServer(server, bigflakes)
 
 	// Reflection
 	reflection.Register(server)

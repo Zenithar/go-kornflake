@@ -2,10 +2,8 @@ package snowflake
 
 import (
 	"context"
-	"fmt"
-	"time"
 
-	"github.com/sony/sonyflake"
+	"github.com/mattheath/kala/snowflake"
 	"go.opencensus.io/trace"
 	"golang.org/x/xerrors"
 
@@ -14,15 +12,17 @@ import (
 )
 
 type service struct {
-	generator *sonyflake.Sonyflake
+	generator *snowflake.Snowflake
 }
 
 // New service implementation using sonyflake
-func New() v1.IdentifierGenerator {
+func New() v1.SnowflakeGenerator {
+	sf, err := snowflake.New(0)
+	if err != nil {
+		panic(err)
+	}
 	return &service{
-		generator: sonyflake.NewSonyflake(sonyflake.Settings{
-			StartTime: time.Now().UTC(),
-		}),
+		generator: sf,
 	}
 }
 
@@ -33,7 +33,7 @@ func (s *service) Get(ctx context.Context, _ *snowflakev1.GetRequest) (*snowflak
 	defer span.End()
 
 	// Generate an id
-	id, err := s.generator.NextID()
+	id, err := s.generator.Mint()
 	if err != nil {
 		span.SetStatus(trace.Status{Code: trace.StatusCodeInternal, Message: err.Error()})
 		return nil, xerrors.Errorf("snowflake: unable to generate an identifier : %w", err)
@@ -41,6 +41,6 @@ func (s *service) Get(ctx context.Context, _ *snowflakev1.GetRequest) (*snowflak
 
 	// Return result
 	return &snowflakev1.GetResponse{
-		Identifier: fmt.Sprintf("%d", id),
+		Identifier: id,
 	}, nil
 }
