@@ -16,9 +16,8 @@ import (
 	"go.opencensus.io/stats/view"
 	"go.uber.org/zap"
 	"go.zenithar.org/kornflake/cli/kornflake/internal/config"
+	"go.zenithar.org/kornflake/cli/kornflake/internal/core"
 	"go.zenithar.org/kornflake/internal/services/v1"
-	"go.zenithar.org/kornflake/internal/services/v1/bigflake"
-	"go.zenithar.org/kornflake/internal/services/v1/snowflake"
 	"go.zenithar.org/kornflake/pkg/gen/go/identifier/bigflake/v1"
 	"go.zenithar.org/kornflake/pkg/gen/go/identifier/snowflake/v1"
 	"go.zenithar.org/pkg/log"
@@ -33,8 +32,8 @@ import (
 // Injectors from wire.go:
 
 func setup(ctx context.Context, cfg *config.Configuration) (*grpc.Server, error) {
-	snowflakeGenerator := snowflake.New()
-	bigflakeGenerator := bigflake.New()
+	snowflakeGenerator := core.Snowflake(cfg)
+	bigflakeGenerator := core.Bigflake(cfg)
 	server, err := grpcServer(ctx, cfg, snowflakeGenerator, bigflakeGenerator)
 	if err != nil {
 		return nil, err

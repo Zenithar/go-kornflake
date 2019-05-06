@@ -13,7 +13,7 @@ import (
 func TestGet(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	s := bigflake.New()
+	s := bigflake.New(0)
 	ctx := context.Background()
 
 	res, err := s.Get(ctx, &bigflakev1.GetRequest{})
@@ -25,7 +25,7 @@ func TestGet(t *testing.T) {
 // -----------------------------------------------------------------------------
 
 func BenchmarkGet(b *testing.B) {
-	s := bigflake.New()
+	s := bigflake.New(1)
 	ctx := context.Background()
 	req := &bigflakev1.GetRequest{}
 

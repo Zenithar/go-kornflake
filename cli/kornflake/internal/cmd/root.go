@@ -50,7 +50,7 @@ var (
 
 func initConfig() {
 	for k := range flags.AsEnvVariables(conf, "", false) {
-		log.CheckErr("Unable to bind environment variable", viper.BindEnv(strings.ToLower(strings.Replace(k, "_", ".", -1)), "KNDM_"+k), zap.String("var", "KNDM_"+k))
+		log.CheckErr("Unable to bind environment variable", viper.BindEnv(strings.ToLower(strings.Replace(k, "_", ".", -1)), "KRNF_"+k), zap.String("var", "KRNF_"+k))
 	}
 
 	switch {

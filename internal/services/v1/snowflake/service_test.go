@@ -13,7 +13,7 @@ import (
 func TestGet(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	s := snowflake.New()
+	s := snowflake.New(0)
 	ctx := context.Background()
 
 	res, err := s.Get(ctx, &snowflakev1.GetRequest{})
@@ -25,7 +25,7 @@ func TestGet(t *testing.T) {
 // -----------------------------------------------------------------------------
 
 func BenchmarkGet(b *testing.B) {
-	s := snowflake.New()
+	s := snowflake.New(1)
 	ctx := context.Background()
 	req := &snowflakev1.GetRequest{}
 

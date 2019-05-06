@@ -16,8 +16,8 @@ type service struct {
 }
 
 // New service implementation using sonyflake
-func New() v1.SnowflakeGenerator {
-	sf, err := snowflake.New(0)
+func New(workerID uint32) v1.SnowflakeGenerator {
+	sf, err := snowflake.New(workerID)
 	if err != nil {
 		panic(err)
 	}

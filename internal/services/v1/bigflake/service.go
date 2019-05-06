@@ -16,8 +16,8 @@ type service struct {
 }
 
 // New service implementation using sonyflake
-func New() v1.BigflakeGenerator {
-	bf, err := bigflake.New(0)
+func New(workerID uint64) v1.BigflakeGenerator {
+	bf, err := bigflake.New(workerID)
 	if err != nil {
 		panic(err)
 	}

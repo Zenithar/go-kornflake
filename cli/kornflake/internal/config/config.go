@@ -21,4 +21,6 @@ type Configuration struct {
 			ClientAuthenticationRequired bool   `toml:"clientAuthenticationRequired" default:"false" comment:"Force client authentication"`
 		} `toml:"TLS" comment:"TLS Socket settings"`
 	}
+
+	WorkerID uint64 `toml:"worker_id" default:"0" comment:"Defines id generator worker ID must be different per instance."`
 }
