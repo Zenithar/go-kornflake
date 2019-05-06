@@ -46,10 +46,6 @@ func GeneratorRoutes(snowflakes v1.SnowflakeGenerator, bigflakes v1.BigflakeGene
 // -----------------------------------------------------------------------------
 
 func (c *generatorCtrl) snowflake() http.HandlerFunc {
-	type response struct {
-		ID string `json:"id"`
-	}
-
 	// Handler
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Prepare context
@@ -62,17 +58,11 @@ func (c *generatorCtrl) snowflake() http.HandlerFunc {
 		}
 
 		// Marshal response
-		respond.With(w, r, http.StatusOK, &response{
-			ID: res.Identifier,
-		})
+		respond.With(w, r, http.StatusOK, res)
 	}
 }
 
 func (c *generatorCtrl) bigflake() http.HandlerFunc {
-	type response struct {
-		ID string `json:"id"`
-	}
-
 	// Handler
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Prepare context
@@ -85,8 +75,6 @@ func (c *generatorCtrl) bigflake() http.HandlerFunc {
 		}
 
 		// Marshal response
-		respond.With(w, r, http.StatusOK, &response{
-			ID: res.Identifier,
-		})
+		respond.With(w, r, http.StatusOK, res)
 	}
 }
