@@ -92,29 +92,6 @@ func (Gen) Wire() {
 	mustGoGenerate("HTTP", "go.zenithar.org/kornflake/cli/kornflake/internal/dispatchers/http")
 }
 
-// Generate mocks for tests
-func (Gen) Mocks() {
-	color.Blue("### Mocks")
-
-	// mustGoGenerate("Repositories", "go.zenithar.org/spotigraph/internal/repositories")
-	// mustGoGenerate("Services", "go.zenithar.org/spotigraph/internal/services")
-}
-
-// Generate mocks for tests
-func (Gen) Decorators() {
-	color.Blue("### Decorators")
-
-	// mustGoGenerate("Repositories", "go.zenithar.org/spotigraph/internal/repositories/pkg/...")
-	// mustGoGenerate("Services", "go.zenithar.org/spotigraph/internal/services/pkg/...")
-}
-
-// Generate initializers
-func (Gen) Migrations() {
-	color.Blue("### Database migrations")
-
-	// mustGoGenerate("PostgreSQL", "go.zenithar.org/spotigraph/internal/repositories/pkg/postgresql")
-}
-
 // Generate protobuf
 func (Gen) Protobuf() error {
 	color.Blue("### Protobuf")
@@ -129,7 +106,7 @@ type Go mg.Namespace
 // Generate go code
 func (Go) Generate() error {
 	color.Cyan("## Generate code")
-	mg.SerialDeps(Gen.Protobuf, Gen.Mocks, Gen.Migrations, Gen.Decorators, Gen.Wire)
+	mg.SerialDeps(Gen.Protobuf, Gen.Wire)
 	return nil
 }
 
@@ -191,6 +168,27 @@ func (Go) Lint() error {
 
 // -----------------------------------------------------------------------------
 
+type Docker mg.Namespace
+
+// Build docker image.
+func (Docker) Build() error {
+	color.Red("# Docker -------------------------------------------------------------------")
+	fmt.Printf("BUILD_DATE : %s\n", time.Now().Format(time.RFC3339))
+	fmt.Printf("VERSION : %s\n", tag())
+	fmt.Printf("VCS_REF : %s\n", hash())
+
+	fmt.Printf(" > Production image\n")
+	return sh.RunV("docker", "build",
+		"-f", "deployment/docker/Dockerfile",
+		"--build-arg", fmt.Sprintf("BUILD_DATE=%s"),
+		"--build-arg", fmt.Sprintf("VERSION=%s", tag()),
+		"--build-arg", fmt.Sprintf("VCS_REF=%s", hash()),
+		"-t", "kornflake:latest",
+		".")
+}
+
+// -----------------------------------------------------------------------------
+
 type Bin mg.Namespace
 
 func (Bin) Kornflake() error {
@@ -208,13 +206,15 @@ func goBuild(packageName, out string) error {
 		"go.zenithar.org/kornflake/internal/version.BuildDate": time.Now().Format(time.RFC3339),
 		"go.zenithar.org/kornflake/internal/version.GoVersion": runtime.Version(),
 	}
-	var linkerArgs string
+	var linkerArgs []string
 	for name, value := range varsSetByLinker {
-		linkerArgs += fmt.Sprintf(" -X %s=%s", name, value)
+		linkerArgs = append(linkerArgs, "-X", fmt.Sprintf("%s=%s", name, value))
 	}
-	linkerArgs = fmt.Sprintf("-s -w %s -extldflags=-Wl,-z,now,-z,relro", linkerArgs)
+	linkerArgs = append(linkerArgs, "-s", "-w")
 
-	return sh.Run("go", "build", "-buildmode=pie", "-ldflags", linkerArgs, "-o", fmt.Sprintf("bin/%s", out), packageName)
+	return sh.RunWith(map[string]string{
+		"CGO_ENABLED": "0",
+	}, "go", "build", "-ldflags", strings.Join(linkerArgs, " "), "-o", fmt.Sprintf("bin/%s", out), packageName)
 }
 
 // -----------------------------------------------------------------------------
