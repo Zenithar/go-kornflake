@@ -82,7 +82,8 @@ func httpServer(ctx context.Context, cfg *config.Configuration, snowflakes v1.Sn
 		log.For(ctx).Info("No transport encryption enabled for HTTP server")
 	}
 
-	err := view.Register(ochttp.ServerRequestCountView, ochttp.ServerRequestBytesView, ochttp.ServerResponseBytesView, ochttp.ServerLatencyView, ochttp.ServerRequestCountByMethod, ochttp.ServerResponseCountByStatusCode)
+	err := view.Register(ochttp.DefaultServerViews...,
+	)
 	if err != nil {
 		log.For(ctx).Fatal("Unable to register stat views", zap.Error(err))
 	}

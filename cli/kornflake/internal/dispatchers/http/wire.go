@@ -77,12 +77,7 @@ func httpServer(ctx context.Context, cfg *config.Configuration, snowflakes v1.Sn
 	// Register stat views
 	err := view.Register(
 		// HTTP
-		ochttp.ServerRequestCountView,
-		ochttp.ServerRequestBytesView,
-		ochttp.ServerResponseBytesView,
-		ochttp.ServerLatencyView,
-		ochttp.ServerRequestCountByMethod,
-		ochttp.ServerResponseCountByStatusCode,
+		ochttp.DefaultServerViews...,
 	)
 	if err != nil {
 		log.For(ctx).Fatal("Unable to register stat views", zap.Error(err))
