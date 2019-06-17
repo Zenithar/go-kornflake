@@ -7,7 +7,6 @@ require (
 	github.com/cloudflare/tableflip v0.0.0-20190521150731-8ccd7b4aff9e
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/fatih/color v1.7.0
-	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/gogo/protobuf v1.2.1
 	github.com/golang/protobuf v1.3.1
@@ -19,20 +18,19 @@ require (
 	github.com/mattheath/base62 v0.0.0-20150408093626-b80cdc656a7a // indirect
 	github.com/mattheath/kala v0.0.0-20171219141654-d6276794bf0e
 	github.com/mattn/go-colorable v0.1.2 // indirect
-	github.com/mcuadros/go-defaults v1.1.0
 	github.com/oklog/run v1.0.0
 	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.5.0
-	github.com/pelletier/go-toml v1.4.0
+	github.com/pelletier/go-toml v1.4.0 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
-	github.com/spf13/viper v1.4.0
 	github.com/stretchr/testify v1.3.0 // indirect
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
+	go.zenithar.org/pkg/config v0.0.2
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.3
-	go.zenithar.org/pkg/platform v0.0.21
+	go.zenithar.org/pkg/platform v0.0.24
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
