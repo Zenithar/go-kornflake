@@ -21,20 +21,18 @@ require (
 	github.com/oklog/run v1.0.0
 	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.5.0
-	github.com/pelletier/go-toml v1.4.0 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
 	github.com/stretchr/testify v1.3.0 // indirect
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
-	go.zenithar.org/pkg/config v0.0.2
+	go.zenithar.org/pkg/config v0.0.3
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.3
-	go.zenithar.org/pkg/platform v0.0.24
+	go.zenithar.org/pkg/platform v0.0.26
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	golang.org/x/xerrors v0.0.0-20190513163551-3ee3066db522
 	google.golang.org/grpc v1.21.1
-	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 )
